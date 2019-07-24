@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./TopNav.scss";
 import API from "../../utils/API";
 import {
     Collapse,

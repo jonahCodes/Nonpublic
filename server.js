@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(routes);
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/react-auth-simple", { useNewUrlParser: true }, function(err) {
+mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://jonathanx99x:jonathan2015@cluster0-3psxk.mongodb.net/reacttest?retryWrites=true&w=majority", { useNewUrlParser: true }, function(err) {
     if (err) throw err;
     console.log(`mongoose connection successful`.yellow);
     app.listen(PORT, (err)=> {
