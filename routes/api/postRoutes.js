@@ -3,6 +3,14 @@ const passport = require("../../config/passport");
 const db = require("../../models");
 const authMiddleware = require("../../config/middleware/authMiddleware");
 
+
+//
+//
+router.get('/create',(req,res)=>{
+        res.render('create');
+})
+
+
 // /api/todos/all
 // get all todos from the signed in user
 router.get("/all", authMiddleware.isLoggedIn, function (req, res, next) {

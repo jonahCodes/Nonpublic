@@ -23,6 +23,9 @@ return axios.post("/api/post/new",postinfo);
   isAdmin: function() {
     return axios.get("/api/users/logout")
   },
+  filePost:function(){
+    return axios.post('/api/file')
+  },
 
   // logs out the user
   logout: function() {

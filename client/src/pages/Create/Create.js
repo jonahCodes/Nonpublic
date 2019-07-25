@@ -10,7 +10,8 @@ export default class Create extends Component{
         loggedIn:false,
         user:null,
         loading:true,
-        post:""
+        post:"",
+        
         
     }
     
@@ -33,7 +34,7 @@ export default class Create extends Component{
     }
     handleSubmit(e){
         e.preventDefault();
-        API.post({post:this.state.post})
+        API.filePost({post:this.state.post})
         .then(result=>{
             console.log(result);
         })

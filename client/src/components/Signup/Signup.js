@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 class Signup extends Component {
     state = {
+        validEmail:false,
         validUsername: false,
         validPassword: false,
         confirmPassword: false
@@ -13,8 +14,20 @@ class Signup extends Component {
         this.validatePassword();
         this.confirmPassword();
         this.validateUsername();
+        this.validateEmail();
     }
-
+    validateEmail() {
+        if (this.props.email.length > 1 && !this.state.validEmail) {
+            this.setState({
+                validEmail: true
+            });
+        }
+        if (this.props.email.length < 1 && this.state.validEmail) {
+            this.setState({
+                validEmail: false
+            });
+        }
+    }
     validateUsername() {
         if (this.props.username.length > 1 && !this.state.validUsername) {
             this.setState({
@@ -68,6 +81,10 @@ class Signup extends Component {
                     <FormGroup>
                         <Label for="username">Username</Label>
                         <Input type="text" name="username" id="username" placeholder="username" value={this.props.username} onChange={this.props.handleInputChange} valid={this.state.validUsername} />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="email">Email</Label>
+                        <Input type="text" name="email" id="email" placeholder="Email" value={this.props.email} onChange={this.props.handleInputChange} valid={this.state.validEmail} />
                     </FormGroup>
                     <FormGroup>
                         <Label for="password">Password</Label>

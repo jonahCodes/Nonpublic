@@ -42,7 +42,15 @@ class Profile extends Component {
                 {this.state.loggedIn ? (
                     <div className="profileBox">
                         <h1 id="userTitle">Welcome {this.state.user.username}</h1>
+                        <div>
+                            <p>Email: {this.state.user.email}</p>
+                            <p>username: {this.state.user.username}</p>
+                            <p>Please Make update to update login credit</p>
+                            <p>INFO Id: {this.state.user._id}</p>
+
+                        </div>
                     </div>
+                   
                 ) : (
                     <div className="noUser">
                         {!this.state.loading ? (
