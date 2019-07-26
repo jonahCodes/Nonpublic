@@ -6,10 +6,20 @@ const postSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User"
   },
+  title:{
+    type:String,
+    unique:true,
+    required:[true,"text is required"]
+  },
   post: {
     type: String,
-    unique: false,
+    unique: true,
     required: [true, "text is required"]
+  },
+  files:{
+    type:Buffer,
+    unique:true,
+    
   },
   createdAt: {
     type: Date,

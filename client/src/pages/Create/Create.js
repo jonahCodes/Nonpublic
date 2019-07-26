@@ -11,8 +11,9 @@ export default class Create extends Component{
         user:null,
         loading:true,
         post:"",
-        
-        
+        title:"",
+        file:[]
+
     }
     
     }
@@ -34,7 +35,12 @@ export default class Create extends Component{
     }
     handleSubmit(e){
         e.preventDefault();
-        API.filePost({post:this.state.post})
+        const data = {
+            post:this.state.post,
+            title:this.state.title,
+            file:this.state.file
+        }
+        API.filePost(data)
         .then(result=>{
             console.log(result);
         })
@@ -65,8 +71,10 @@ export default class Create extends Component{
 
                         <div className='container' style={{paddingTop:'200px'}}>
                         <form className="login-form" onSubmit={this.handleSubmit.bind(this)}>
+                        <input onChange={this.handleChange.bind(this)}name="title" type="text" placeholder="Title"value={this.state.title}/>
+                        <input name="file" type="file" multiple/>
                         <input onChange={this.handleChange.bind(this)} name="post" type="text" value={this.state.post} className="input username"  placeholder="post here" />
-                        <button >add</button>
+                        <button type="submit">add</button>
                         </form>
               </div>
 

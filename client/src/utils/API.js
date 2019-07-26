@@ -11,7 +11,7 @@ export default {
     return axios.post("/api/users/signup", signupInfo);
   },
   post:function(postinfo){
-return axios.post("/api/post/new",postinfo);
+    return axios.post("/api/post/new",postinfo);
   },
 
   // checks to see if user is logged in, then returns the user
