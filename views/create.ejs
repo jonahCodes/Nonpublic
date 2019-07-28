@@ -63,31 +63,32 @@ input[type='file'] {
     </head>
     
     <body>  
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h1 class="text-center display-4 my-4">MongoDb file</h1>
-                    <form action="/api/post/new" method="POST" enctype="multipart/form-data">
-                        <div class="custom-file mb-3">
-                          <input type="file" name="file" id="file" multiple>
-                          <label for="file" class="custom-file-label">Choose File</label>
-                        </div>
-                        <input type="text" name="title" placeholder="Add title">
-                        <textarea type="text" name="post" placeholder="Add a Description"></textarea>
-                        
-                        <button class="btn btn-primary btn-block" type="submit">Submit</button>
-                      </form>
-                        <a class="btn-success btn"href="http://192.168.0.15:3000/">
+      <div class="row">
+        <h1 style="text-align: center">Create a New Campground</h1>
+        <div style="width: 30%; margin: 25px auto;">
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+              <div class="form-group">
+                <input class="form-control" type="text" name="post[title]" placeholder="Title">
+            </div>
+                <div class="form-group">
+                    <label for="image" class="btn btn-danger">Image</label>
+                    <input type="file"  id="image"name="image" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="post[description]" placeholder="description">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+                </div>
+            </form>
+              <a class="btn-success btn"href="http://192.168.0.15:3000/">
                                                 GO back 
                         </a>
-                                        
-                </div>
-
-            </div>
-
+                        <img src="<%= typeof file != 'undefined' ? file : '' %>" alt="">
         </div>
+    </div>
         
-               
+            
         
                     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
                     crossorigin="anonymous"></script>
@@ -97,5 +98,5 @@ input[type='file'] {
                     crossorigin="anonymous"></script>
 
     </body>
-    </html>
+    </html> 
 

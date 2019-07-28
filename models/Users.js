@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
 const usersSchema = new Schema({
+  _id:mongoose.Schema.Types.ObjectId,
+  
   email:{
     type:String,
     required:[true,"Email is required"],
@@ -35,7 +37,7 @@ const usersSchema = new Schema({
     default: Date.now()
   },
   post: [{
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Post'
   }]
 });

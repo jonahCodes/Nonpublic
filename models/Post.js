@@ -3,24 +3,20 @@ const Schema = mongoose.Schema;
 
 const postSchema = new Schema({
   author: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User"
   },
   title:{
     type:String,
-    unique:true,
-    required:[true,"text is required"]
+    required:true
   },
-  post: {
-    type: String,
-    unique: true,
-    required: [true, "text is required"]
+  description:{
+    type:String,
+    required:true
   },
-  files:{
-    type:Buffer,
-    unique:true,
-    
-  },
+
+  image:String,
+
   createdAt: {
     type: Date,
     default: Date.now()
