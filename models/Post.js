@@ -1,21 +1,24 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
 
-const postSchema = new Schema({
+
+const postSchema = new mongoose.Schema({
   author: {
+    id:{
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
   },
+  username:String
+},
   title:{
     type:String,
-    required:true
+    
   },
   description:{
     type:String,
-    required:true
+    
   },
 
-  image:String,
+  image:[{path:String}] ,
 
   createdAt: {
     type: Date,

@@ -13,7 +13,7 @@ const authMiddleware = require("../../config/middleware/authMiddleware");
 
 //
 //authMiddleware.isLoggedIn
-router.get('/create',(req,res)=>{
+router.get('/create',authMiddleware.isLoggedIn,(req,res)=>{
         res.render('create');
 })
 //finds all files
@@ -33,7 +33,7 @@ router.get('/files', (req, res) => {
 // /api/post/all
 //get all the data info
 router.get("/all", authMiddleware.isLoggedIn, function (req, res, next) {
-    db.Post.find({ author: req.user.id }, (err, post) => {
+    db.Post.find(req.params.id , (err, post) => {
         res.json(post);
     });
 });

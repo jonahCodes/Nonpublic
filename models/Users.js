@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
-const Schema = mongoose.Schema;
 
-const usersSchema = new Schema({
-  _id:mongoose.Schema.Types.ObjectId,
+const usersSchema = new mongoose.Schema({
   
   email:{
     type:String,
@@ -35,11 +33,7 @@ const usersSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now()
-  },
-  post: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Post'
-  }]
+  }
 });
 
 usersSchema.methods.generateHash = function (password) {

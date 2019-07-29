@@ -15,6 +15,14 @@ const passport = require("passport");
 const logger = require("morgan");
 const flash = require('connect-flash');
 const authMiddleware = require('./config/middleware/authMiddleware');
+const cloudinary = require('cloudinary').v2;
+const Post = require('./models/Post')
+
+cloudinary.config({
+  cloud_name:'dzyy5uebd',
+  api_key:'125433241969574',
+  api_secret:'Lagqd7s6BxA-ZAZHGVzMmSAL91w'
+});
 
 app.use(methodOverride('_method'));
 
@@ -35,7 +43,6 @@ app.use(session({
     secret: "keyboard cat",
     resave: false,
     saveUninitialized: true,
-    // cookie: { secure: true }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -54,6 +61,7 @@ var storage = multer.diskStorage({
         path.extname(file.originalname));
     }
   });
+
   const upload = multer({
     storage:storage,
     limits:{fileSize:1000000},
@@ -64,7 +72,7 @@ var storage = multer.diskStorage({
   
 
 // check filetype 
-function checkFileType(file,cb){
+ checkFileType = (file,cb) =>{
     //allowed EXT
     const filetypes = /jpeg|jpg|png|gif/;
   //checkEXT
@@ -79,7 +87,7 @@ function checkFileType(file,cb){
   }
   
   }
-  app.post('/upload', (req, res) => {
+  app.post('/upload',authMiddleware.isLoggedIn, (req, res) => {
     upload(req, res, (err) => {
       if(err){
         res.render('create', {
@@ -91,10 +99,28 @@ function checkFileType(file,cb){
             msg: 'Error: No File Selected!'
           });
         } else {
-          res.render('create', {
-            msg: 'File Uploaded!',
-            file: `uploads/${req.file.filename}`
-          });
+          // console.log(req.file);
+          // res.render('create', {
+          //   msg: 'File Uploaded!',
+          //   file: `uploads/${req.file.filename}`
+          // });
+          if(req.file){
+            const path1 = req.file.path
+            const uniqueFilename = new Date().toISOString();
+            
+            console.log(path1);
+                var image = {path:path1}
+                var author = {id:req.user._id,username:req.user.username}
+                var newPost = {image:image,author:author}
+                Post.create(newPost,(err,newpost)=>{
+                    if(err){
+                      console.log(err);
+                    }else{
+                      console.log(newpost);
+                      res.redirect('http://192.168.0.15:3000/')
+                    }
+                })
+          }
         }
       }
     });
