@@ -8,7 +8,7 @@ export default class Items extends Component{
     items:[]
   }
   componentDidMount(){
-  axios.get('http://localhost:3001/items')
+  axios.get('/items')
     .then(res=>{
       console.log(res.data);
       this.setState({items:res.data});
