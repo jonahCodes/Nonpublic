@@ -8,7 +8,7 @@ const auth = {
             next();
         } else{
             console.log("user not authenticated");
-            res.redirect('http://192.168.0.15:3000/login');
+            res.redirect('http://localhost:3000/login');
         }
     },
 

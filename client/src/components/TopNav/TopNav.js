@@ -70,7 +70,7 @@ export default class Navigation extends Component {
                                     {this.state.loggedIn ? (
                                         <div>
                                             <DropdownItem>
-                                                <NavLink href='http://192.168.0.15:3001/api/post/create'>Add Post</NavLink>
+                                                <NavLink href='http://localhost:3001/api/post/create'>Add Post</NavLink>
                                             </DropdownItem>
                                             <DropdownItem>
                                                 <NavLink href="/profile">Profile</NavLink>

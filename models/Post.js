@@ -11,14 +11,15 @@ const postSchema = new mongoose.Schema({
 },
   title:{
     type:String,
+    require:true
     
   },
   description:{
     type:String,
-    
+    require:true
   },
 
-  image:[{path:String}] ,
+  image:[{filename:String}] ,
 
   createdAt: {
     type: Date,

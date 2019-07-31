@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const passport = require("../../config/passport");
-const db = require("../../models");
 const Post = require('../../models/Post')
 const mongoose = require('mongoose');
 const multer = require('multer');
@@ -14,15 +13,15 @@ router.get('/create',authMiddleware.isLoggedIn,(req,res)=>{
 })
 ///api/post/all
 //landing page /@ALL POST 
-router.get("/image", function (req, res, next) {
-    db.Post.find(req.params.id , (err, post) => {
+router.get("/all", function (req, res, next) {
+    Post.find(req.params.id , (err, post) => {
         res.json(post);
     });
 });
 
 //@ display image for testing 
 //REACT oneItem
-router.get('/image/:id', (req, res) => {
+router.get('/all/:id', (req, res) => {
   Post.findById(req.params.id ).exec(function(err, foundpost){
     // Check if file
     if (!foundpost || err) {
@@ -48,12 +47,29 @@ router.delete("/remove/:id", function (req, res, next) {
 });
 
 //@UPDATE REQUEST FOR A POST ONLY description,title, NONimage related
-//
-router.put("/update/:id", authMiddleware.isLoggedIn, function (req, res, next) {
-Post.findByIdAndUpdate(req.params.id, { post: req.body.post }, { new: true }, (err, post) => {
-        if (err) throw err;
-        res.json(post);
-    });
+//, authMiddleware.isLoggedIn
+router.post("/update/:id",(req, res)=> {
+Post.findById(req.params.id, (err, post) => {
+        if (!post)
+           res.status(404).json(`cant updated NO POST FOUND.`);
+        else
+          post.title = req.body.title;
+          post.description =req.body.description;
+          
+          console.log(post);
+          post.save().then(doc=>{
+            if(doc){
+                 res.status(200).send(`post is update ${doc}`);
+
+              }else{
+                res.status(404).json({message:"icouldnot update anything"})
+
+              }
+          })
+          .catch(err=>{
+            res.status(500).send(`update Not Possible ${err}`);
+          })
+         });
 });
 router.patch('/:id',(req,res,next)=>{
     const id =req.params.id;

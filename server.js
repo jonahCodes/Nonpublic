@@ -90,34 +90,31 @@ var storage = multer.diskStorage({
   app.post('/upload',authMiddleware.isLoggedIn, (req, res) => {
     upload(req, res, (err) => {
       if(err){
-        res.render('create', {
+        res.json({
           msg: err
         });
       } else {
+
         if(req.file == undefined){
-          res.render('create', {
+          res.json({
             msg: 'Error: No File Selected!'
           });
         } else {
-          // console.log(req.file);
-          // res.render('create', {
-          //   msg: 'File Uploaded!',
-          //   file: `uploads/${req.file.filename}`
-          // });
-          if(req.file){
-            const path1 = req.file.path
-            const uniqueFilename = new Date().toISOString();
-            
-            console.log(path1);
-                var image = {path:path1}
+          if(req.file){        
+                const filename1=req.file.filename    
+                var image = {filename:filename1}
+                var description = req.body.description;
+                var title = req.body.title;
                 var author = {id:req.user._id,username:req.user.username}
-                var newPost = {image:image,author:author}
+                var newPost = {image:image,author:author,description:description,title:title}
                 Post.create(newPost,(err,newpost)=>{
                     if(err){
                       console.log(err);
                     }else{
                       console.log(newpost);
-                      res.redirect('http://192.168.0.15:3000/')
+                      console.log('=====');
+                      console.log(req.file);
+                      res.redirect('http://localhost:3000');
                     }
                 })
           }

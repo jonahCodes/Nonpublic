@@ -70,20 +70,20 @@ input[type='file'] {
         <div style="width: 30%; margin: 25px auto;">
             <form action="/upload" method="POST" enctype="multipart/form-data">
               <div class="form-group">
-                <input class="form-control" type="text" name="post[title]" placeholder="Title">
+                <input class="form-control" type="text" name="title" placeholder="Title">
             </div>
                 <div class="form-group">
                     <label for="image" class="btn btn-danger">Image</label>
-                    <input type="file"  id="image"name="image" accept="image/*">
+                    <input type="file"  id="image" name="image" accept="image/*">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="post[description]" placeholder="description">
+                    <input class="form-control" type="text" name="description" placeholder="description">
                 </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-primary btn-block">Submit!</button>
                 </div>
             </form>
-              <a class="btn-success btn"href="http://192.168.0.15:3000/">
+              <a class="btn-success btn"href="http://localhost:3000/">
                                                 GO back 
                         </a>
                         <img src="<%= typeof file != 'undefined' ? file : '' %>" alt="" class="responsive-img">

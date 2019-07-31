@@ -24,7 +24,7 @@ export default {
     return axios.get("/api/users/logout")
   },
   filePost:function(){
-    return axios.post('/api/file')
+    return axios.post('/upload')
   },
 
   // logs out the user
