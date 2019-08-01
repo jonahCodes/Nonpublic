@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 // import createForm from './Form'
 import { Link } from 'react-router-dom'
+import Items from './items';
 
 
 export default class Home extends Component{
@@ -26,10 +27,13 @@ export default class Home extends Component{
           <p>
           This App is a blog web mobile using responsive practice and React js combined with a Backend making it called the MERN stack.
            </p>
-           <a className="button primary" href='/create' name="jonathan">Add blog</a> 
+           <a className="button primary" href='//localhost:3001/api/post/create'>Add blog</a> 
         </div>
       </div>
     </section> 
+    <section>
+    <Items />
+    </section>
         </div>
     )
   }

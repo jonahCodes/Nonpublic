@@ -9,7 +9,7 @@ const authMiddleware = require("../../config/middleware/authMiddleware");
 //EJS CREATE POST
 //authMiddleware.isLoggedIn
 router.get('/create',authMiddleware.isLoggedIn,(req,res)=>{
-        res.render('create');
+        res.render('create',{ ERROR: req.flash('ERROR') });
 })
 ///api/post/all
 //landing page /@ALL POST 

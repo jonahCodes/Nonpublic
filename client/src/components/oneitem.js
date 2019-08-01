@@ -3,13 +3,12 @@ export default class Oneitem extends Component{
     constructor(props){
         super(props);
            this.state={
-                items:this.props
-
+              items:this.props
            }
         }
     render(){
         console.log('=====================')
-        console.log(this.props.id)
+        console.log(this.props)
         
         return (
             <div>
@@ -21,7 +20,7 @@ export default class Oneitem extends Component{
           
                <a href={"/items/"+this.props.id}>
                 <div className="thumbnail__img" >
-                {/* <img src={this.props.image}/> */}
+                <img src={this.props.image}/>
                </div>
               </a>
             </div>

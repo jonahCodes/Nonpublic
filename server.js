@@ -15,17 +15,11 @@ const passport = require("passport");
 const logger = require("morgan");
 const flash = require('connect-flash');
 const authMiddleware = require('./config/middleware/authMiddleware');
-const cloudinary = require('cloudinary').v2;
-const Post = require('./models/Post')
-
-cloudinary.config({
-  cloud_name:'dzyy5uebd',
-  api_key:'125433241969574',
-  api_secret:'Lagqd7s6BxA-ZAZHGVzMmSAL91w'
-});
+const Post = require('./models/Post');
+require('dotenv').config();
 
 app.use(methodOverride('_method'));
-
+//CORS
 var corsOptions = {
     origin: '*',
     optionsSuccessStatus: 200,
@@ -44,82 +38,64 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
 }));
+//passportcfg
 app.use(passport.initialize());
 app.use(passport.session());
-
-
-// if (process.env.NODE_ENV === "production") {
-//     app.use(express.static("client/build"));
-// }
-
+//routes
 app.use(routes);
 
 var storage = multer.diskStorage({
-    destination: './public/uploads',
-    filename: function(req, file, callback) {
-      callback(null,file.fieldname + '-' + Date.now() + 
-        path.extname(file.originalname));
+  filename: function(req, file, callback) {
+    callback(null, Date.now() + file.originalname);
+  }
+});
+  
+  
+var imageFilter = function (req, file, cb) {
+    // accept image files only
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+        return cb(new Error('Only image files are allowed!'), false);
     }
-  });
+    cb(null, true);
+};
 
-  const upload = multer({
-    storage:storage,
-    limits:{fileSize:1000000},
-    fileFilter:function(req,file,cb){
-      checkFileType(file,cb);
-    } 
-  }).single('image')
-  
+var upload = multer({ storage: storage, fileFilter: imageFilter})
 
-// check filetype 
- checkFileType = (file,cb) =>{
-    //allowed EXT
-    const filetypes = /jpeg|jpg|png|gif/;
-  //checkEXT
-  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-  //check Mime
-  const mimetype = filetypes.test(file.mimetype);
-  
-  if(mimetype && extname){
-    return cb(null,true);
-  }else{
-    cb("error:Images only!");
-  }
-  
-  }
-  app.post('/upload',authMiddleware.isLoggedIn, (req, res) => {
-    upload(req, res, (err) => {
+var cloudinary = require('cloudinary');
+//cloud config
+cloudinary.config({
+  cloud_name:'dzyy5uebd',
+  api_key:'125433241969574',
+  api_secret:process.env.CLOUDINARY_SECRET
+});
+
+  app.post('/upload',authMiddleware.isLoggedIn,upload.single('image'), (req, res) => {
+    cloudinary.v2.uploader.upload(req.file.path, (err,result) => {
       if(err){
-        res.json({
+        return res.json({
           msg: err
         });
-      } else {
-
-        if(req.file == undefined){
-          res.json({
-            msg: 'Error: No File Selected!'
-          });
-        } else {
-          if(req.file){        
-                const filename1=req.file.filename    
-                var image = {filename:filename1}
-                var description = req.body.description;
-                var title = req.body.title;
-                var author = {id:req.user._id,username:req.user.username}
-                var newPost = {image:image,author:author,description:description,title:title}
-                Post.create(newPost,(err,newpost)=>{
-                    if(err){
-                      console.log(err);
-                    }else{
-                      console.log(newpost);
-                      console.log('=====');
-                      console.log(req.file);
-                      res.redirect('http://localhost:3000');
-                    }
-                })
+      } 
+        
+        //add image SECUREURL 
+        var image = result.secure_url
+        //addIMAGE public ID
+        var imageId = result.public_id
+        //postbody 
+        var description = req.body.description;
+        var title = req.body.title;
+        var author = {id:req.user._id,username:req.user.username}
+        if(description && title){
+        Post.create({author,imageId,image,title,description},(err,post)=>{
+          if(err){
+           return res.json(err);
           }
-        }
+          res.send(`uploaded==========${post}`);
+        })
       }
+        req.flash('ERROR','Missing POST Parameters!');
+        res.render('create',{ ERROR: req.flash('ERROR') })
+      
     });
   });
 

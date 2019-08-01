@@ -5,23 +5,27 @@ import Oneitem from './oneitem';
 
 export default class Items extends Component{
     state={
-    items:[]
+    post:[]
   }
   componentDidMount(){
-  axios.get('/items')
+  axios.get('http://localhost:3001/api/post/all')
     .then(res=>{
       console.log(res.data);
-      this.setState({items:res.data});
+      this.setState({post:res.data});
+    })
+    .catch(err=>{
+      console.log(err)
     })
   } 
   
    render(){
-    var allitems = this.state.items.map(item => {
+    var allitems = this.state.post.map(item => {
         return <Oneitem
         key={item._id}
         id={item._id}
+        title={item.title}
         image={item.image}
-        title={item.description}
+        description={item.description}
         />
     });
   

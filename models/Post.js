@@ -18,9 +18,8 @@ const postSchema = new mongoose.Schema({
     type:String,
     require:true
   },
-
-  image:[{filename:String}] ,
-
+  image:String,
+  imageId:String,
   createdAt: {
     type: Date,
     default: Date.now()
