@@ -1,4 +1,5 @@
-import React,{Component} from 'react'
+import React,{Component} from 'react';
+
 export default class Oneitem extends Component{
     constructor(props){
         super(props);
@@ -6,11 +7,8 @@ export default class Oneitem extends Component{
               items:this.props
            }
         }
-    render(){
-        console.log('=====================')
-        console.log(this.props)
-        
-        return (
+    render(){      
+      return (
             <div>
             <section key={this.props.id} className='main special'>
   <div className="container fit primary">

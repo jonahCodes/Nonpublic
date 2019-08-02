@@ -19,7 +19,7 @@ class Show extends Component {
 
 
 componentDidMount=()=>{
-    axios.get('http://localhost:3001/'+this.props.match.params.id)
+    axios.get('http://localhost:3001/api/post/all/'+this.props.match.params.id)
     .then(res=>{
       console.log('======****AXIOS RES.data***=========')
       console.log(res);
@@ -28,7 +28,7 @@ componentDidMount=()=>{
   }
   
   handleDelete=(e)=>{
-   axios.delete('http://localhost:3001/'+this.props.match.params.id)
+   axios.delete('http://localhost:3001/api/post/remove/'+this.props.match.params.id)
   .then(res=>{
     console.log('delete success');
     console.log(res);
@@ -52,7 +52,7 @@ componentDidMount=()=>{
         key={this.state.show._id}
         id={this.state.show._id}
         image={this.state.show.image}
-        title={this.state.show.description}
+        title={this.state.show.title}
   />
  }
  handleForm=()=>{
@@ -85,13 +85,11 @@ render() {
         <div>
              <div className="Projects">
         <h1>
-	         show Index page
+	        {this.state.show.title} 
         </h1>
-        <div>
-       {this.state.show._id}
-       </div>
       </div>
           <DisplayShow image={this.state.show.image}/>
+          <div>{this.state.show.description}</div>
             </div>
             <button onClick={this.handleDelete} disabled={this.state.loading}>delete</button>
              

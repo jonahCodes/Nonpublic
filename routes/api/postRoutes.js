@@ -48,7 +48,7 @@ router.delete("/remove/:id", function (req, res, next) {
 
 //@UPDATE REQUEST FOR A POST ONLY description,title, NONimage related
 //, authMiddleware.isLoggedIn
-router.post("/update/:id",(req, res)=> {
+router.post("/update/:id",authMiddleware.isLoggedIn,(req, res)=> {
 Post.findById(req.params.id, (err, post) => {
         if (!post)
            res.status(404).json(`cant updated NO POST FOUND.`);
